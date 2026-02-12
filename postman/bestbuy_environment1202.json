@@ -4,8 +4,7 @@
 	"values": [
 		{
 			"key": "url",
-			"value": "",
-			"type": "default",
+			"value": "http://localhost:3030",
 			"enabled": true
 		},
 		{
