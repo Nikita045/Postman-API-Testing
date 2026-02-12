@@ -1,0 +1,540 @@
+{
+  "info": {
+    "_postman_id": "d87c9996-dde4-4669-8887-ba5d1ffdee4c",
+    "name": "Best Buy API E-commerce Testing",
+    "description": "StartFragmentThe Best Buy API Playground is an API training tool for students, educators and other learners to explore the possibilities of a fully functional [RESTful API](http://www.restapitutorial.com/) in a simple, non-production environment. API Playground was developed by Best Buy and makes use of a [Creative Commons licensed](https://creativecommons.org/licenses/by-nc/4.0/) dataset including over 50,000 products and store-related information - making it easy for teaching APIs (both consumption and creation) to classrooms with realistic data. The playground supports full [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) (Create Read Update Delete) operations for all API endpoints and does not require any external services nor databases.EndFragment",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "CRUD Operations",
+      "item": [
+        {
+          "name": "All products",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "8e1be118-8f04-4164-b38f-a90c2ce53df2",
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "55ce23c1-b1ff-41f1-9cb2-ae7b512c5012",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function() {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time < 3s\", () => {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                  "});\r",
+                  "pm.test(\"Response is JSON\", ()  =>{\r",
+                  "    pm.response.to.be.json\r",
+                  "});\r",
+                  "let jsonData = pm.response.json();\r",
+                  "pm.test(\"Mandatory fields are present\", function () {\r",
+                  "    pm.expect(jsonData).to.have.property(\"total\");\r",
+                  "    pm.expect(jsonData).to.have.property(\"skip\");\r",
+                  "    pm.expect(jsonData).to.have.property(\"limit\");\r",
+                  "});\r",
+                  "pm.test(\"Each product has mandatory fields\", () => {\r",
+                  "    jsonData.data.forEach(product => {\r",
+                  "        pm.expect(product).to.have.property(\"id\");\r",
+                  "        pm.expect(product).to.have.property(\"name\");\r",
+                  "        pm.expect(product).to.have.property(\"price\");\r",
+                  "        pm.expect(product).to.have.property(\"manufacturer\");\r",
+                  "        pm.expect(product).to.have.property(\"categories\");\r",
+                  "    });\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "id": "ce455d08-b0de-46fd-ae12-2a87bec9b89e",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/products",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Request 2",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "73a2ac47-0974-48bd-8833-0ec9192d8a64",
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "20ce5b0f-d892-4af2-b205-3ea65add6a5f",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time < 1s\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "let jsonData = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Product ID is correct\", function () {\r",
+                  "    pm.expect(jsonData).to.be.an(\"object\");\r",
+                  "    pm.expect(jsonData).to.have.property(\"id\");\r",
+                  "    pm.expect(jsonData.id).to.eql(150115);\r",
+                  "    });\r",
+                  "pm.test(\"Product Name is correct\", function () {\r",
+                  "    pm.expect(jsonData).to.have.property(\"name\");\r",
+                  "    pm.expect(jsonData.name).to.eql(\"Energizer - MAX Batteries AA (4-Pack)\");\r",
+                  "});\r",
+                  "pm.test(\"Product Price is correct\", function () {\r",
+                  "    pm.expect(jsonData).to.have.property(\"price\");\r",
+                  "    pm.expect(jsonData.price).to.eql(4.99);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "id": "a252b512-f571-4a5d-8c8f-2bb67a91d610",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/products/150115",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "products",
+                "150115"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Request 3",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "da3dda47-51cd-48f4-a588-20e08fb3b27b",
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "0ce938ef-5be9-492a-b05c-8b8f33102236",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time < 2s\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "id": "b3c6744f-8e15-44f9-9991-e0a327db022f",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/products?name=Duracell - D Batteries (4-Pack)",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "Duracell - D Batteries (4-Pack)",
+                  "uuid": "c6f3bd3e-01b5-49c4-99d7-b74cf0f2a5a4"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "created req val",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "7ac05dd6-0c5d-4a83-b6db-1d4a6b2ff80b",
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "5d9de6f2-90ef-4190-a5a2-0add70deeab3",
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "\r",
+                  "    pm.response.to.have.status(\"Created\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time < 2s\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});\r",
+                  "let jsonData = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Product resource is created with correct data\", function () {\r",
+                  "    pm.expect(jsonData).to.be.an(\"object\");\r",
+                  "    pm.expect(jsonData).to.have.property(\"name\");\r",
+                  "    pm.expect(jsonData.name).to.eql(\"Linza\");\r",
+                  "    });\r",
+                  "pm.test(\"Product is created with correct price\", () => {\r",
+                  "    pm.expect(jsonData).to.have.property(\"price\");\r",
+                  "    pm.expect(jsonData.price).to.eql(2000);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "id": "9c088fda-42f8-4e84-82fb-18cc89511fa6",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Linza\",\r\n  \"type\": \"string\",\r\n  \"price\": 2000,\r\n  \"shipping\": 100,\r\n  \"upc\": \"string\",\r\n  \"description\": \"added new user\",\r\n  \"manufacturer\": \"amazon\",\r\n  \"model\": \"string\",\r\n  \"url\": \"string\",\r\n  \"image\": \"string\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/products",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Deleted record",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "f0a61c37-4f2b-412f-9511-adc42e81340c",
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "a06caf0a-2903-4b1e-bb17-8e9b64890a12",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "let jsonData = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Response is an array\", function () {\r",
+                  "    pm.expect(jsonData).to.be.an(\"array\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Product list is empty after delete\", function () {\r",
+                  "    pm.expect(jsonData.length).to.eql(0);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "id": "995db933-64e1-43fc-a6a4-c142c82ca6a8",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Linza\",\r\n  \"type\": \"string\",\r\n  \"price\": 2000,\r\n  \"shipping\": 100,\r\n  \"upc\": \"string\",\r\n  \"description\": \"added new user\",\r\n  \"manufacturer\": \"amazon\",\r\n  \"model\": \"string\",\r\n  \"url\": \"string\",\r\n  \"image\": \"string\"\r\n}"
+            },
+            "url": {
+              "raw": "{{url}}/products?name=nikita",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "nikita",
+                  "uuid": "4225fb40-b420-4f77-93e3-97b2c56ea851"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "modified existing Request",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "59007605-0ec0-4f11-892a-4e91fa589d13",
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "9ffdd3ac-0830-4b3e-8317-f0a51f36c1ab",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "let jsonData = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Response is an array\", function () {\r",
+                  "    pm.expect(jsonData).to.be.an(\"array\");\r",
+                  "    pm.expect(jsonData.length).to.be.above(0);\r",
+                  "});\r",
+                  "\r",
+                  "// Access first object inside array\r",
+                  "let product = jsonData[0];\r",
+                  "\r",
+                  "pm.test(\"Product resource name is modified\", function () {\r",
+                  "    pm.expect(product).to.have.property(\"name\");\r",
+                  "    pm.expect(product.name).to.eql(\"nikita kataria\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Updated Price is correct\", function () {\r",
+                  "    pm.expect(product).to.have.property(\"price\");\r",
+                  "    pm.expect(product.price).to.eql(1500);\r",
+                  "});\r",
+                  "console.log(pm.response.json());"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "id": "90fcff44-fdf3-446d-8559-8ab373c19783",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"nikita kataria\",\r\n  \"type\": \"string\",\r\n  \"price\": 1500,\r\n  \"shipping\": 100,\r\n  \"upc\": \"string\",\r\n  \"description\": \"modified existing user\",\r\n  \"manufacturer\": \"myntra\",\r\n  \"model\": \"string\",\r\n  \"url\": \"https/myntra.com\",\r\n  \"image\": \"img.png\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/products?id=9999681",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "9999681",
+                  "uuid": "1a3dd330-b2be-4e4f-adc1-f8e9db4d5346"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "15ece3f8-6372-4202-98e2-12dd1ad1729f",
+                "exec": [
+                  "pm.test(\"Status code is 404 Not Found\", function () {\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "f44f5712-f754-4718-9444-e5c56da307bd",
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "id": "6723c053-1d45-44cf-a020-87f1109d471f",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Linza\",\r\n  \"type\": \"string\",\r\n  \"price\": 2000,\r\n  \"shipping\": 100,\r\n  \"upc\": \"string\",\r\n  \"description\": \"added new user\",\r\n  \"manufacturer\": \"amazon\",\r\n  \"model\": \"string\",\r\n  \"url\": \"string\",\r\n  \"image\": \"string\"\r\n}"
+            },
+            "url": {
+              "raw": "{{url}}/products?id=9999681",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "9999681",
+                  "uuid": "774c4942-b76f-4058-84d7-5bf3d90c9402"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "f3a3d35f-7ca2-4d7e-a3bb-fe26cc3d7736",
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{token}}",
+            "type": "string"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "d34e8d6e-2c88-4c0a-9dfa-a9f48da5c99e",
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              "if (!pm.environment.get(\"url\")) {\r",
+              "    throw new Error(\"baseUrl is not set in environment\");\r",
+              "}\r",
+              "// Headers\r",
+              "pm.request.headers.upsert({\r",
+              "    key: \"Content-Type\",\r",
+              "    value: \"application/json\"\r",
+              "});\r",
+              "\r",
+              "// Get token from environment or collection variable\r",
+              "let token = pm.variables.get(\"token\");\r",
+              "\r",
+              "if (!token) {\r",
+              "    console.log(\"Token is missing!\");\r",
+              "    throw new Error(\"Authorization token is not set in {{token}} variable.\");\r",
+              "}\r",
+              "\r",
+              "console.log(\"Token found:\", token);\r",
+              "// Tracking\r",
+              "pm.environment.set(\"requestTime\", new Date().toISOString());"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "id": "5b5b4a76-4439-481e-8f0d-7668447a8149",
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
