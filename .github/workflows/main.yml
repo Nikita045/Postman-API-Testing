@@ -12,22 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # Install Node.js
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
-      # Install project dependencies
-      - name: Install Project Dependencies
-        run: npm install
-
-      # Start Best Buy API server in background
-      - name: Start API Server
-        run: |
-          npm start &
-          sleep 10   # wait for server to start
-
       # Install Newman
       - name: Install Newman
         run: |
