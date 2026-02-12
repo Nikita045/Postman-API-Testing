@@ -1,0 +1,571 @@
+{
+  "info": {
+    "_postman_id": "d87c9996-dde4-4669-8887-ba5d1ffdee4c",
+    "name": "Best Buy API E-commerce Testing",
+    "description": "StartFragmentThe Best Buy API Playground is an API training tool for students, educators and other learners to explore the possibilities of a fully functional [RESTful API](http://www.restapitutorial.com/) in a simple, non-production environment. API Playground was developed by Best Buy and makes use of a [Creative Commons licensed](https://creativecommons.org/licenses/by-nc/4.0/) dataset including over 50,000 products and store-related information - making it easy for teaching APIs (both consumption and creation) to classrooms with realistic data. The playground supports full [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) (Create Read Update Delete) operations for all API endpoints and does not require any external services nor databases.EndFragment",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "43210637"
+  },
+  "item": [
+    {
+      "name": "CRUD Operations",
+      "item": [
+        {
+          "name": "All products",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function() {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time < 3s\", () => {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                  "});\r",
+                  "pm.test(\"Response is JSON\", ()  =>{\r",
+                  "    pm.response.to.be.json\r",
+                  "});\r",
+                  "let jsonData = pm.response.json();\r",
+                  "pm.test(\"Mandatory fields are present\", function () {\r",
+                  "    pm.expect(jsonData).to.have.property(\"total\");\r",
+                  "    pm.expect(jsonData).to.have.property(\"skip\");\r",
+                  "    pm.expect(jsonData).to.have.property(\"limit\");\r",
+                  "});\r",
+                  "pm.test(\"Each product has mandatory fields\", () => {\r",
+                  "    jsonData.data.forEach(product => {\r",
+                  "        pm.expect(product).to.have.property(\"id\");\r",
+                  "        pm.expect(product).to.have.property(\"name\");\r",
+                  "        pm.expect(product).to.have.property(\"price\");\r",
+                  "        pm.expect(product).to.have.property(\"manufacturer\");\r",
+                  "        pm.expect(product).to.have.property(\"categories\");\r",
+                  "    });\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3030/products",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3030",
+              "path": [
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Request 2",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time < 1s\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "let jsonData = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Product ID is correct\", function () {\r",
+                  "    pm.expect(jsonData).to.be.an(\"object\");\r",
+                  "    pm.expect(jsonData).to.have.property(\"id\");\r",
+                  "    pm.expect(jsonData.id).to.eql(150115);\r",
+                  "    });\r",
+                  "pm.test(\"Product Name is correct\", function () {\r",
+                  "    pm.expect(jsonData).to.have.property(\"name\");\r",
+                  "    pm.expect(jsonData.name).to.eql(\"Energizer - MAX Batteries AA (4-Pack)\");\r",
+                  "});\r",
+                  "pm.test(\"Product Price is correct\", function () {\r",
+                  "    pm.expect(jsonData).to.have.property(\"price\");\r",
+                  "    pm.expect(jsonData.price).to.eql(4.99);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3030/products/150115",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3030",
+              "path": [
+                "products",
+                "150115"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Request 3",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time < 2s\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3030/products?name=Duracell - D Batteries (4-Pack)",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3030",
+              "path": [
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "Duracell - D Batteries (4-Pack)"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "created req val",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "\r",
+                  "    pm.response.to.have.status(\"Created\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time < 2s\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});\r",
+                  "let jsonData = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Product resource is created with correct data\", function () {\r",
+                  "    pm.expect(jsonData).to.be.an(\"object\");\r",
+                  "    pm.expect(jsonData).to.have.property(\"name\");\r",
+                  "    pm.expect(jsonData.name).to.eql(\"Linza\");\r",
+                  "    });\r",
+                  "pm.test(\"Product is created with correct price\", () => {\r",
+                  "    pm.expect(jsonData).to.have.property(\"price\");\r",
+                  "    pm.expect(jsonData.price).to.eql(2000);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Linza\",\r\n  \"type\": \"string\",\r\n  \"price\": 2000,\r\n  \"shipping\": 100,\r\n  \"upc\": \"string\",\r\n  \"description\": \"added new user\",\r\n  \"manufacturer\": \"amazon\",\r\n  \"model\": \"string\",\r\n  \"url\": \"string\",\r\n  \"image\": \"string\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3030/products",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3030",
+              "path": [
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Deleted record",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "let jsonData = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Response is an array\", function () {\r",
+                  "    pm.expect(jsonData).to.be.an(\"array\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Product list is empty after delete\", function () {\r",
+                  "    pm.expect(jsonData.length).to.eql(0);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Linza\",\r\n  \"type\": \"string\",\r\n  \"price\": 2000,\r\n  \"shipping\": 100,\r\n  \"upc\": \"string\",\r\n  \"description\": \"added new user\",\r\n  \"manufacturer\": \"amazon\",\r\n  \"model\": \"string\",\r\n  \"url\": \"string\",\r\n  \"image\": \"string\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3030/products?name=nikita",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3030",
+              "path": [
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "nikita"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "modified existing Request",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "let jsonData = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Response is an array\", function () {\r",
+                  "    pm.expect(jsonData).to.be.an(\"array\");\r",
+                  "    pm.expect(jsonData.length).to.be.above(0);\r",
+                  "});\r",
+                  "\r",
+                  "// Access first object inside array\r",
+                  "let product = jsonData[0];\r",
+                  "\r",
+                  "pm.test(\"Product resource name is modified\", function () {\r",
+                  "    pm.expect(product).to.have.property(\"name\");\r",
+                  "    pm.expect(product.name).to.eql(\"nikita kataria\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Updated Price is correct\", function () {\r",
+                  "    pm.expect(product).to.have.property(\"price\");\r",
+                  "    pm.expect(product.price).to.eql(1500);\r",
+                  "});\r",
+                  "console.log(pm.response.json());"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"nikita kataria\",\r\n  \"type\": \"string\",\r\n  \"price\": 1500,\r\n  \"shipping\": 100,\r\n  \"upc\": \"string\",\r\n  \"description\": \"modified existing user\",\r\n  \"manufacturer\": \"myntra\",\r\n  \"model\": \"string\",\r\n  \"url\": \"https/myntra.com\",\r\n  \"image\": \"img.png\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3030/products?id=9999681",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3030",
+              "path": [
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "9999681"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404 Not Found\", function () {\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Linza\",\r\n  \"type\": \"string\",\r\n  \"price\": 2000,\r\n  \"shipping\": 100,\r\n  \"upc\": \"string\",\r\n  \"description\": \"added new user\",\r\n  \"manufacturer\": \"amazon\",\r\n  \"model\": \"string\",\r\n  \"url\": \"string\",\r\n  \"image\": \"string\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3030/products?id=9999681",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3030",
+              "path": [
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "9999681"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "auth": {
+        "type": "oauth2",
+        "oauth2": [
+          {
+            "key": "tokenType",
+            "value": "",
+            "type": "string"
+          },
+          {
+            "key": "accessToken",
+            "value": "{{token}}",
+            "type": "string"
+          },
+          {
+            "key": "addTokenTo",
+            "value": "header",
+            "type": "string"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              "if (!pm.environment.get(\"url\")) {\r",
+              "    throw new Error(\"baseUrl is not set in environment\");\r",
+              "}\r",
+              "// Headers\r",
+              "pm.request.headers.upsert({\r",
+              "    key: \"Content-Type\",\r",
+              "    value: \"application/json\"\r",
+              "});\r",
+              "\r",
+              "// Get token from environment or collection variable\r",
+              "let token = pm.variables.get(\"token\");\r",
+              "\r",
+              "if (!token) {\r",
+              "    console.log(\"Token is missing!\");\r",
+              "    throw new Error(\"Authorization token is not set in {{token}} variable.\");\r",
+              "}\r",
+              "\r",
+              "console.log(\"Token found:\", token);\r",
+              "// Tracking\r",
+              "pm.environment.set(\"requestTime\", new Date().toISOString());"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}
